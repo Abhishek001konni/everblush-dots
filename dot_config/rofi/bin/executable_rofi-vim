@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+# Constants
+VIM_FILE="$HOME/.config/rofi/vimcheat.txt"
+URL="https://raw.githubusercontent.com/rdvm/rofi-vim/master/vimcheat"
+CUSTOM_THEME="$HOME/.config/rofi/themes/vim.rasi" # Define your custom theme file here
+CURRENT_TIME=$(date +%s)
+
+function notify() {
+    if [ "$(command -v notify-send)" ]; then
+        notify-send "$1" "$2"
+    fi
+}
+
+function download() {
+    notify "$(basename "$0")" 'Downloading Vim cheat sheet'
+
+    echo "" >"$VIM_FILE"
+
+    echo "Downloading: $URL"
+    cheatsheet=$(curl -s "$URL")
+
+    echo "$cheatsheet" >>"$VIM_FILE"
+
+    notify "$(basename "$0")" "Cheat sheet downloaded"
+}
+
+function sheet_check() {
+    if [ ! -f "$VIM_FILE" ] || [ $((CURRENT_TIME - $(stat -c %Y "$VIM_FILE"))) -gt 2592000 ]; then
+        download
+    fi
+}
+
+function rvim() {
+    sheet_check
+
+    # Check if custom theme exists
+    if [ -f "$CUSTOM_THEME" ]; then
+        theme_option="-theme $CUSTOM_THEME"
+    else
+        notify "$(basename "$0")" "Custom theme not found: $CUSTOM_THEME"
+        theme_option="-theme-str 'window {width: 98%;}' -theme-str 'window {location: north;}'"
+    fi
+
+    # Use rofi with the selected theme
+    sheet=$(cat "$VIM_FILE")
+    line=$(echo "$sheet" | rofi -dmenu -p "Vim action" -i $theme_option)
+    exit_code=$?
+
+    line=("$line")
+}
+
+function dvim() {
+    sheet_check
+
+    # dmenu doesn't have theme-specific features; keeping this as is
+    sheet=$(cat "$VIM_FILE")
+    line=$(echo "$sheet" | dmenu -fn "mono 23" -p "Vim action" -i -l 15)
+    exit_code=$?
+
+    line=("$line")
+}
+
+case $1 in
+--dvim)
+    dvim
+    ;;
+*)
+    rvim
+    ;;
+esac

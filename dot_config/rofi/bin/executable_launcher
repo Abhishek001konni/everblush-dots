@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+DIR="$HOME/.config"
+
+   app=$(rofi \
+	-show drun \
+	-modi run,drun,filebrowser,window\
+	-no-lazy-grab \
+	-scroll-method 0 \
+	-drun-match-fields all \
+	-drun-display-format "{name}" \
+	-no-drun-show-actions \
+	-terminal alacritty \
+	-kb-cancel Alt-F1 \
+	-theme "$DIR"/rofi/themes/launcher.rasi \
+	-p "Launch")
+
+   if [ -z "$app" ]; then
+	   exit 0
+   fi
+
+   if ! pkexec env DISPLAY=$DISPLAY XAUTHORITY=$XAUTHORITY "$app" 2>/dev/null; then "
+	   "$app" &
+   fi

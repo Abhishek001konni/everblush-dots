@@ -1,0 +1,5 @@
+## start gnome polkit agent
+#/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+#
+## Start lxsession-gtk3 polkit agent
+/usr/bin/lxpolkit &> /dev/null &

@@ -1,0 +1,258 @@
+[module/space]
+type = custom/text
+format = "  "
+format-background = ${colors.background}
+
+[module/sep]
+type = custom/text
+format = | 
+format-background = ${colors.background}
+format-foreground = ${colors.black}
+content-padding = 1
+
+[module/LD]
+type = custom/text
+format = "%{T6}%{T-}"
+format-foreground = ${colors.liteblush}
+format-background = ${colors.everblush}
+format-padding = 0
+
+[module/RD]
+type = custom/text
+format = "%{T6}%{T-}"
+format-foreground = ${colors.liteblush}
+format-background = ${colors.everblush}
+format-padding = 0
+
+[module/arch-updates]
+type = custom/script
+exec = ~/.config/polybar/scripts/arch-updates.sh &
+interval = 3600
+format-background = ${colors.background}
+format-foreground = ${colors.foreground}
+format-prefix = "  "
+format-prefix-foreground = ${colors.blue}
+label = %output%
+format-prefix-font = 2
+
+
+[module/filesystem]
+type = internal/fs
+interval = 25
+mount-0 = /
+format-mounted-prefix = " "
+format-mounted-prefix-foreground = ${colors.green}
+;format-mounted-prefix-background = ${colors.liteblush}
+label-mounted = %free%
+label-mounted-foreground = ${colors.foreground}
+label-unmounted = %mountpoint% not mounted
+;label-mounted-background = ${colors.liteblush}
+format-mounted-prefix-font = 2
+
+[module/cpu]
+;https://github.com/jaagr/polybar/wiki/Module:-cpu
+type = internal/cpu
+interval = 2
+format = <label>
+format-background = ${colors.background}
+format-foreground = ${colors.foreground}
+format-prefix = " "
+format-prefix-foreground = ${colors.yellow}
+label = %percentage:2%%
+format-font = 2
+
+[module/temperature-cpu]
+format-prefix= " "
+type = internal/temperature
+;thermal-zone =
+interval = 20
+format = <label>
+format-prefix-foreground = ${colors.red}
+hwmon-path = /sys/devices/pci0000:00/0000:00:18.3/hwmon/hwmon2/temp1_input
+label = %temperature-c%
+label-foreground = ${colors.foreground}
+
+[module/temperature-gpu]
+type = internal/temperature
+;thermal-zone =
+interval = 20
+format = <label>
+format-prefix-foreground = ${colors.red}
+hwmon-path = /sys/devices/pci0000:00/0000:00:03.1/0000:26:00.0/0000:27:00.0/0000:28:00.0/hwmon/hwmon3/temp2_input
+label = %temperature-c%
+
+[module/memory]
+type = internal/memory
+interval = 2
+format-prefix = " "
+format-prefix-foreground = ${colors.red}
+label = %gb_used% %percentage_used%%
+label-foreground = ${colors.foreground}
+
+[module/brightness]
+type = custom/script
+exec = brightnessctl g | awk '{print int($1 / 1000)}'  # Display brightness in percentage
+tail = true
+format = %output%
+label = %{F#${colors.blue}}%output%%{F-}
+
+; Define your ramp using symbols and percentages
+ramp-0 = 
+ramp-1 = 
+ramp-2 = 󰃝
+ramp-3 = 󰃝
+ramp-4 = 󰃞
+ramp-5 = 󰃞
+ramp-6 = 󰃟
+ramp-7 = 󰃟
+ramp-8 = 󰃠
+ramp-9 = 󰃠
+
+ramp-font = 7
+ramp-foreground = ${colors.blue}
+
+enable-scroll = true
+
+scroll-up = brightnessctl s +10%
+scroll-down = brightnessctl s 10%-
+
+
+[module/pulseaudio]
+type = internal/pulseaudio
+sink = alsa_output.pci-0000_12_00.3.analog-stereo
+
+
+use-ui-max = false
+
+
+interval = 5
+
+format-volume = <ramp-volume> <label-volume>
+format-volume-background = ${colors.background}
+format-volume-foreground = ${colors.foreground}
+
+format-muted = <label-muted>
+format-muted-background = ${colors.background}
+format-muted-prefix = 婢
+format-muted-prefix-foreground = ${colors.red}
+
+label-volume = %percentage%%
+label-muted = " Mute"
+label-muted-foreground = ${colors.red}
+
+ramp-volume-0 = 
+ramp-volume-1 = 
+ramp-volume-2 = 
+ramp-volume-3 = 
+ramp-volume-4 = 
+ramp-volume-5 = 
+ramp-volume-6 = 
+ramp-volume-7 = 
+ramp-volume-8 = 
+ramp-volume-9 = 
+ramp-volume-foreground = ${colors.blue}
+
+ramp-headphones-0 =  🎧
+ramp-headphones-1 =  🎧
+
+[module/uptime]
+;https://github.com/jaagr/polybar/wiki/User-contributed-modules#uptime
+type = custom/script
+exec = uptime | awk -F, '{sub(".*up ",x,$1);print $1}'
+interval = 100
+label = %output%
+
+format-foreground = ${colors.foreground}
+format-background = ${colors.background}
+format-prefix = " "
+format-prefix-foreground = ${colors.cyan}
+
+
+[module/date]
+type = internal/date
+interval = 30
+;label-font = 2
+time = %H:%M
+time-alt = %a, %d %b %y
+format = <label>
+;label-background = #232a2d
+;format-prefix = " "
+format-prefix-foreground = ${colors.cyan}
+;format-prefix-background = #232a2d
+label = %time%
+label-foreground = ${colors.cyan}
+label-font = 3
+;format-padding = 8
+;
+; Separator in between workspaces
+;label-separator-padding = 2
+;label-separator-foreground = #ffb52a
+;
+;
+[module/bspwm]
+type = internal/bspwm
+
+enable-click = true
+enable-scroll = true
+reverse-scroll = false
+pin-workspaces = true
+occupied-scroll = true
+
+ws-icon-0 = 1;
+ws-icon-1 = 2;
+ws-icon-2 = 3;
+ws-icon-3 = 4;
+ws-icon-4 = 5;
+ws-icon-5 = 6;
+ws-icon-6 = 7;
+ws-icon-default = " "
+
+
+format = <label-state> <label-mode>
+
+label-focused = %name%
+label-focused-background = ${colors.green}
+;label-focused-underline= ${colors.magenta}
+label-focused-padding = 1
+label-focused-foreground = ${colors.background}
+label-focused-font = 2
+
+label-occupied = %name%
+label-occupied-padding = 1
+label-occupied-background = ${colors.background}
+label-occupied-foreground = ${colors.foreground}
+label-occupied-font = 2
+
+label-urgent = %name%
+label-urgent-padding = 1
+label-urgent-foreground = ${colors.red}
+label-urgent-background = ${colors.background}
+label-urgent-font = 2
+
+label-empty = %name%
+label-empty-foreground = ${colors.black}
+label-empty-padding = 1
+label-empty-background = ${colors.background}
+label-empty-font = 2
+
+
+label-monocle = "  "
+label-monocle-foreground = ${colors.foreground}
+label-fullscreen = "  "
+label-fullscreen-foreground = ${colors.foreground}
+label-floating = "  "
+label-floating-foreground = ${colors.foreground}
+label-pseudotiled = "  "
+label-pseudotiled-foreground = ${colors.foreground}
+label-locked = "  "
+label-locked-foreground = ${colors.foreground}
+label-sticky = "  "
+label-sticky-foreground = ${colors.foreground}
+label-private =  "     "
+label-private-foreground = ${colors.foreground}
+
+; Separator in between workspaces
+;label-separator = "|"
+;label-separator-padding = 0
+;label-separator-foreground = ${colors.background2}
+;
