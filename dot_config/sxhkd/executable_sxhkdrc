@@ -2,9 +2,8 @@
 
 # Toggle right click context menu.
 ~button3
-    bspc query -D -d 'focused.!occupied' \
-            && jgmenu_run
-
+     bspc query -D -d 'focused.!occupied' || bspc query -N -n 'focused.floating' \
+     && jgmenu_run 
 ##---------- Keybindings for bspwm ----------##
 
 # Terminal (alacritty)
@@ -140,7 +139,10 @@ super + space
     bspc node -t "~"{floating,tiled}
 
 # Pseudo Tiled & tiled mode
-super + shift + space
+#super + shift + space
+
+super + m 
+   bspc desktop -l monocle
 
 super + {p,t}
     bspc node -t "~"{pseudo_tiled,tiled}
@@ -189,8 +191,8 @@ alt + {Left,Down,Up,Right}
   ~/.config/bspwm/scripts/resize.sh {left,down,up,right} 30
 
 # Hide/Unhide Window
-#super + shift + i
-#	winmask		
+super + shift + i
+       bspc node -g hidden		
 
 # i3 like resizing
 #alt + h
