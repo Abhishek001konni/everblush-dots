@@ -39,8 +39,8 @@
 bspc monitor -d 1 2 3 4 5
 
 # ----- General BSPWM configurations ----- #
-bspc config border_width 5  
-bspc config window_gap 10
+bspc config border_width 2  
+bspc config window_gap 8
 bspc config split_ratio 0.52
 
 bspc config focused_border_color "#151f1b" 
@@ -99,7 +99,7 @@ bspc rule -a Brave-browser desktop='^2' follow=on focus=on
 
 # ----- Autostart Apps --------------------- #
 # Kill if already running
-killall -9  sxhkd dunst polybar bspc xcompmgr 
+killall -9 sxhkd dunst polybar bspc &>/dev/null 
 
 # Launch xsettingsd daemon (if needed)
 #xsettingsd &
@@ -155,4 +155,4 @@ picom --config ~/.config/picom/picom.conf &
 polybar bspwm &
 
 #set wall
-feh --bg-scale /home/abhishek/Pictures/NightTrain.jpg
+feh --bg-scale /home/abhishek/Pictures/forest.png

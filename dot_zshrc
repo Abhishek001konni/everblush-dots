@@ -110,8 +110,8 @@ function show_neofetch()
 	local rows=$(tput lines 2>/dev/tty)
 	local cols=$(tput cols 2>/dev/tty )
 
-	local min_rows=44
-	local min_cols=87
+	local min_rows=43
+	local min_cols=86
 
 
 	[ "$rows" -ge "$min_rows" ] && [ "$cols" -ge "$min_cols" ] && neofetch
