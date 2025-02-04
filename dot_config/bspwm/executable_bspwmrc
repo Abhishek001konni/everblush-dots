@@ -64,7 +64,13 @@ bspc config pointer_action2 resize_corner
 # ----- Window rules ----- #
 #  Remove all existing rules first 
 #bspc rule -r *:*
-#bspc rule -a '*' state=floating
+bspc rule -a dialog state=floating center=true
+bspc rule -a utility state=floating center=true
+bspc rule -a splash state=floating center=true
+bspc rule -a toolbar state=floating center=true
+
+bspc rule -a Polkit-gnome-authentication-agent-1 state=floating center=true
+
 
 # Custom window rules for specific apps (can comment out apps you don't need)
 #bspc rule -a firefox -o state=floating rectangle=800x600+10+10
@@ -85,7 +91,7 @@ bspc rule -a Brave-browser desktop='^2' follow=on focus=on
 #   bspc rule -a $i desktop='^4' follow=on focus=on; done
 
 # JetBrains IDEs (comment out if not needed)
-# bspc rule -a jetbrains-clion desktop ='^4' state=floating follow=on focus=on
+bspc rule -a  jetbrains-datagrip desktop ='^4' follow=on focus=on
 
 # Office apps (comment out if you don't use these apps)
 #declare -a office=(LibreOffice Soffice *:libreoffice)
@@ -155,4 +161,4 @@ picom --config ~/.config/picom/picom.conf &
 polybar bspwm &
 
 #set wall
-feh --bg-scale /home/abhishek/Pictures/forest.png
+feh --bg-scale /home/abhishek/Pictures/everblush/converttree.png

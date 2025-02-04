@@ -4,6 +4,7 @@
 ~button3
      bspc query -D -d 'focused.!occupied' || bspc query -N -n 'focused.floating' \
      && jgmenu_run 
+
 ##---------- Keybindings for bspwm ----------##
 
 # Terminal (alacritty)
@@ -14,11 +15,13 @@ super + Return
 super + shift + Return
 	alacritty -float
 
+#launch datagrip
+super + d
+        datagrip
+
 # Telegram
-#super + t
-#	telegram-desktop
-
-
+super + t
+	materialgram
 ##---------- Rofi Launcher & Menus ----------##
 
 # Rofi App Launcher
@@ -32,6 +35,7 @@ super + r
 # Rofi Menus/Applets
 super + {m,x,R,s,i}
 	sh ~/.config/rofi/bin/{mpd,powermenu,asroot,screenshot,network}
+
 
 ##---------- Applications ----------##
 
@@ -144,6 +148,7 @@ super + space
 super + m 
    bspc desktop -l monocle
 
+#tiled or pseudo-tiled
 super + {p,t}
     bspc node -t "~"{pseudo_tiled,tiled}
 
